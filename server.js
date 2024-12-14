@@ -1,11 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import rout from "./Route/user.js";
-import cors from "cors"
+import cors from "cors";
+import 'dotenv/config';
+
 
 const app =express();
+const dbURI = process.env.MONGODB_URI;
 mongoose
-  .connect("mongodb+srv://fahim:VlC1J930kCjLfaGx@cluster0.qjlbx0h.mongodb.net/?retryWrites=true&w=majority", {
+  .connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -13,6 +16,7 @@ mongoose
   .catch((err) => console.log("error while connecting to db: ", err));
   
   app.use(express.json());
+  console.log(process.env.PORT)
 app.use(express.urlencoded({ extended: true }));
 const corsOptions = { exposedHeaders: ["ak", "rk", "ft"] };
 app.use(cors("http://localhost:3000/"));
@@ -22,6 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(rout)
-app.listen(8000,()=>{
+const port = process.env.PORT || 8181;
+app.listen(port,()=>{
     console.log("connection")
 })
