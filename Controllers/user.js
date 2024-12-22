@@ -1,14 +1,17 @@
-import user from "../model/user.js"
+import homeuser from "../model/homeUser.js"
 export const Addusers = async (req, res) => {
-    const { name, email } = req.body;
+    const { name, email,phone, service,message} = req.body;
     try {
-        if (!name && !email) {
-            return res.json({ message: "all feild req" })
+        if (!name || !email  || !phone  || !service  || !message) {
+            return res.json({ message: 'Field cannot be empty' });
         }
-        const userData = await user.create({ name, email });
+        const userData = await user.create({ name, email,phone, service,message});
         if (userData) {
-            // res.json({ message: " data add successfully" })
-            res.status(201).json(userData);
+            console.log(userData)
+             res.status(201).json(
+                { userData,
+                message: " data add successfully" })
+          //  res.status(201).json(userData);
         }
 
 
@@ -18,6 +21,30 @@ export const Addusers = async (req, res) => {
     }
 
 }
+
+export const AddHomeUser = async (req, res) => {
+    const { name, email,phone,message} = req.body;
+    try {
+        if (!name || !email  || !phone    || !message) {
+            return res.json({ message: 'Field cannot be empty' });
+        }
+        const userData = await homeuser.create({ name, email,phone,message});
+        if (userData) {
+            console.log(userData)
+             res.status(201).json(
+                { userData,
+                message: " data add successfully" })
+          //  res.status(201).json(userData);
+        }
+
+
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+
+    }
+
+}
+
 
 export const AllUaers = async (req, res) => {
     try {

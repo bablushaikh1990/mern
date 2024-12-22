@@ -26,6 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(rout)
+app.use("/uploads", express.static("uploads"));
 const port = process.env.PORT || 8181;
 app.listen(port,()=>{
     console.log("connection")

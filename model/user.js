@@ -5,6 +5,15 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String
-    }
+    },
+    phone: {
+        type: Number
+    },
+    service: {
+        type: String
+    },
+    message: {
+        type: String
+    },
 })
 export default mongoose.model("user", userSchema)
