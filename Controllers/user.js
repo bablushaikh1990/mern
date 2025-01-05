@@ -1,4 +1,5 @@
-import homeuser from "../model/homeUser.js"
+import homeuser from "../model/homeUser.js";
+import user from "../model/user.js";
 export const Addusers = async (req, res) => {
     const { name, email,phone, service,message} = req.body;
     try {
@@ -45,7 +46,7 @@ export const AddHomeUser = async (req, res) => {
 
 }
 
-
+// ===================
 export const AllUaers = async (req, res) => {
     try {
         const allData = await user.find();
@@ -105,5 +106,40 @@ export const getUserById = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
+}
+
+
+
+// --------for home user means---contact----
+export const AllUaersContact = async (req, res) => {
+    try {
+        const allData = await homeuser.find();
+        if (allData) {
+            //  res.json(allData)
+            res.status(200).json(allData);
+        }
+        //  console.log(allData)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+
+    }
+
+}
+
+
+export const UserDeleteContact = async (req, res) => {
+    const id = req.params.id
+    try {
+        const allData = await homeuser.deleteOne({ _id: id });
+        if (allData) {
+            return res.status(201).json("User deleted Successfully");
+        }
+        console.log(allData)
+
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+
+    }
+
 }
 
